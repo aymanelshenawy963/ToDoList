@@ -1,0 +1,80 @@
+﻿@section Scripts
+{
+    @if (TempData["action"] != null)
+    {
+        <script>
+            {
+                toastr.success('@TempData["action"]')
+            }
+        </script>
+    }
+}
+
+<div class="row mb-3">
+    <h1>Welcome,@TempData["Name"] </h1>
+    <p>Here is your to-do list:</p>
+    <a href="/TodoItems/CreateNew" >Create New</a>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">Pdf</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-light">
+                <th>@item.Title</th>
+                <td>@item.Description</td>
+                <td>@item.Deadline</td>
+                <td>
+                    <!-- PDF Download Link -->
+                    <a href="@Url.Content("~/Pdf/" + item.Pdf)" download="@item.Pdf" class="btn btn-dark">
+                        Download PDF <i class="bi bi-download"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/TodoItems/Edit?UserDataId=@item.Id" type="button" class="btn btn-primary"> <i class="bi bi-pencil-square"> </i>Edit</a>
+
+                    <!-- Trigger Modal for Delete -->
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteId(@item.Id)">Delete <i class="bi bi-trash3"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- The delete button will confirm and proceed with the deletion -->
+                <a id="confirmDeleteBtn" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set the delete button's href to the correct URL when the modal is shown
+    function setDeleteId(id) {
+        var deleteBtn = document.getElementById("confirmDeleteBtn");
+        deleteBtn.href = "/TodoItems/Delete?UserDataId=" + id;
+    }
+</script>

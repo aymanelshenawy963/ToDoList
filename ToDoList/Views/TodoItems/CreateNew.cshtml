@@ -1,0 +1,129 @@
+﻿@* 
+<div>
+    <h1>Create New Item</h1>
+    <h4>List Item</h4>
+    <hr />
+</div>
+
+<!-- Form for creating a new To-Do item -->
+<div class="row">
+    <form action="/TodoItems/CreateNew" enctype="multipart/form-data" method="post">
+        <div class="mb-3">
+            <!-- Title Input -->
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter title" required>
+
+            <!-- Description Input -->
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description" placeholder="Enter description" required>
+
+            <!-- Deadline Input with past dates restricted -->
+            <label for="Deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" class="form-control" id="Deadline" name="Deadline" required>
+
+            <!-- PDF Upload -->
+            <label for="Pdf" class="form-label">PDF</label>
+            <input type="file" class="form-control" id="Pdf" name="Pdf" accept="application/pdf" onchange="previewPdf(event)">
+
+            <!-- PDF Preview -->
+            <div class="mt-3">
+                <img id="pdfPreview" src="" alt="PDF Preview" style="max-width: 200px; display: none;" />
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+
+<script>
+    // Prevent past dates in Deadline input
+    document.addEventListener("DOMContentLoaded", function () {
+        var deadlineInput = document.getElementById('Deadline');
+        var today = new Date();
+        var todayISO = today.toISOString().slice(0, 16); // Format to match datetime-local format
+        deadlineInput.min = todayISO; // Set minimum date to today
+    });
+
+    // Function to preview PDF when selected
+    function previewPdf(event) {
+        var pdf = document.getElementById('pdfPreview');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            pdf.src = reader.result;
+            pdf.style.display = 'block'; // Show the preview
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Convert PDF to a Data URL for preview
+        } else {
+            pdf.style.display = 'none'; // Hide preview if no file
+        }
+    }
+</script>
+ *@
+
+<div>
+    <h1>Create New Item</h1>
+    <h4>List Item</h4>
+    <hr />
+</div>
+
+<!-- Form for creating a new To-Do item -->
+<div class="row">
+    <form action="/TodoItems/CreateNew" enctype="multipart/form-data" method="post">
+        <div class="mb-3">
+            <!-- Title Input -->
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter title" required>
+
+            <!-- Description Input -->
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description" placeholder="Enter description" required>
+
+            <!-- Deadline Input with past dates restricted -->
+            <label for="Deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" class="form-control" id="Deadline" name="Deadline" required>
+
+            <!-- PDF Upload -->
+            <label for="Pdf" class="form-label">PDF</label>
+            <input type="file" class="form-control" id="Pdf" name="Pdf" accept="application/pdf" onchange="previewPdf(event)" required>
+
+            <!-- PDF Preview -->
+            <div class="mt-3">
+                <embed id="pdfPreview" type="application/pdf" width="200" height="200" style="display: none;" />
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+
+<script>
+    // Prevent past dates in Deadline input
+    document.addEventListener("DOMContentLoaded", function () {
+        var deadlineInput = document.getElementById('Deadline');
+        var today = new Date();
+        var todayISO = today.toISOString().slice(0, 16); // Format to match datetime-local format
+        deadlineInput.min = todayISO; // Set minimum date to today
+    });
+
+    // Function to preview PDF when selected
+    function previewPdf(event) {
+        var pdf = document.getElementById('pdfPreview');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            pdf.src = reader.result;
+            pdf.style.display = 'block'; // Show the preview
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Convert PDF to a Data URL for preview
+        } else {
+            pdf.style.display = 'none'; // Hide preview if no file
+        }
+    }
+</script>
